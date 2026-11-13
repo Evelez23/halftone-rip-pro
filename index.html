@@ -677,7 +677,9 @@
             background: var(--charcoal); aspect-ratio: 16/10;
         }
         .gallery-item img {
-            width:100%; height:100%; object-fit: cover;
+            width:100%; height:100%; object-fit: contain;
+            padding: 10px;
+            background: #0a0a0a;
             transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
             display: block;
         }
@@ -1656,22 +1658,22 @@
         </div>
         <div class="gallery-item reveal reveal-d2" data-slot="gal-report" data-size="1600×1000">
             <div class="gallery-placeholder">
-                <div class="gallery-placeholder-icon">📊</div>
-                <div class="gallery-placeholder-label" data-en="Production Report — Coming Soon" data-es="Reporte de Producción — Próximamente">Production Report — Coming Soon</div>
+                <div class="gallery-placeholder-icon">📁</div>
+                <div class="gallery-placeholder-label" data-en="Recent Jobs" data-es="Trabajos Recientes">Recent Jobs</div>
             </div>
             <div class="gallery-caption">
-                <strong data-en="Production Report" data-es="Reporte de Producción">Production Report</strong>
-                <span data-en="Clear, actionable preflight results in production language, not jargon." data-es="Resultados de preflight claros y accionables en lenguaje de producción, no jerga.">Clear, actionable preflight results in production language, not jargon.</span>
+                <strong data-en="Recent Jobs" data-es="Trabajos Recientes">Recent Jobs</strong>
+                <span data-en="Review files processed during the current session and return to recent work." data-es="Consulta los archivos procesados durante la sesión y vuelve a trabajos recientes.">Review files processed during the current session and return to recent work.</span>
             </div>
         </div>
         <div class="gallery-item reveal reveal-d3" data-slot="gal-compare" data-size="1600×1000">
             <div class="gallery-placeholder">
                 <div class="gallery-placeholder-icon">🎯</div>
-                <div class="gallery-placeholder-label" data-en="Artwork Comparison — Coming Soon" data-es="Comparación del Diseño — Próximamente">Artwork Comparison — Coming Soon</div>
+                <div class="gallery-placeholder-label" data-en="Visual Integrity Review" data-es="Revisión de Integridad Visual">Visual Integrity Review</div>
             </div>
             <div class="gallery-caption">
-                <strong data-en="Artwork Comparison View" data-es="Vista de Comparación del Diseño">Artwork Comparison View</strong>
-                <span data-en="Side-by-side comparison with highlighted differences before you print." data-es="Comparación lado a lado con diferencias resaltadas antes de imprimir.">Side-by-side comparison with highlighted differences before you print.</span>
+                <strong data-en="Visual Integrity Review" data-es="Revisión de Integridad Visual">Visual Integrity Review</strong>
+                <span data-en="Review the comparison score, observations and checks before production." data-es="Revisa el porcentaje de coincidencia, las observaciones y las verificaciones antes de producir.">Review the comparison score, observations and checks before production.</span>
             </div>
         </div>
     </div>
@@ -2070,22 +2072,22 @@ function loadVideo() {
 
 // ── IMAGES: pega aquí la ruta (o URL) de cada captura. Vacío = se ve el marco. ──
 const IMAGES = {
-    'hero-main':        '',  // 1920×1080  Ventana principal de HRP
-    'preview-result':   '',  // 1200×900   Resultado simulado (caso recreado con arte propio/libre)
-    'preview-reference':'',  // 1200×900   Imagen de referencia
-    'preview-diff':     '',  // 1200×900   Mapa de diferencias (idealmente con un color sin noquear)
-    'feat-plates':      '',  // 1200×750   Panel de separaciones / orden de placas
-    'feat-colors':      '',  // 1200×750   Biblioteca de colores / chips resueltos
-    'feat-check':       '',  // 1200×750   Comparación con score y diferencias
-    'feat-halftone':    '',  // 1200×750   Separación tramada ampliada
-    'feat-analysis':    '',  // 1200×750   Panel de análisis con hallazgos
-    'feat-offline':     '',  // 1200×750   HRP corriendo sin conexión
-    'gal-separation':   '',  // 1600×1000  Panel de separación
-    'gal-layers':       '',  // 1600×1000  Previsualizador de capas
-    'gal-diff':         '',  // 1600×1000  Análisis de diferencias
-    'gal-libraries':    '',  // 1600×1000  Bibliotecas de color
-    'gal-report':       '',  // 1600×1000  Reporte de producción
-    'gal-compare':      '',  // 1600×1000  Vista de comparación
+    'hero-main':        'imagenes/RIP & Separaciones.png',
+    'preview-result':   '',
+    'preview-reference':'',
+    'preview-diff':     '',
+    'feat-plates':      'imagenes/separaciones procesadas.png',
+    'feat-colors':      'imagenes/Ghostscript Engine.png',
+    'feat-check':       'imagenes/mapa de diferencia.png',
+    'feat-halftone':    'imagenes/Configuración de Semitono.png',
+    'feat-analysis':    'imagenes/Visual Integrity.png',
+    'feat-offline':     'imagenes/modo de descarga ZIPPDF.png',
+    'gal-separation':   'imagenes/RIP & Separaciones.png',
+    'gal-layers':       'imagenes/Capas.png',
+    'gal-diff':         'imagenes/mapa de diferencia.png',
+    'gal-libraries':    'imagenes/Ghostscript Engine.png',
+    'gal-report':       'imagenes/Trabajos recientes.png',
+    'gal-compare':      'imagenes/Visual Integrity.png',
 };
 document.querySelectorAll('[data-slot]').forEach(el => {
     const slot = el.dataset.slot, src = IMAGES[slot];
