@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halftone RIP Pro — Prepress made practical for screen-printing shops</title>
+    <meta name="description" content="HRP: practical prepress for textile screen-printing shops. Review separations, organize shop colors and set halftone options. Runs locally on Windows.">
+    <meta property="og:title" content="Halftone RIP Pro — Prepress for textile screen printing">
+    <meta property="og:description" content="Review separations, organize shop colors and set halftone options before the job reaches the press.">
+    <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -21,7 +25,9 @@
             --safety-soft: rgba(245, 196, 0, 0.12);
             --chalk:       #f0ede8;
             --smoke:       #888888;
-            --deep-smoke:  #555555;
+            --deep-smoke:  #8a8a8a;
+            --card-bg:     #141414;
+            --card-border: rgba(255,255,255,0.08);
             --ok:          #3dba6b;
             --fail:        #e8520a;
             --font-display: 'Barlow Condensed', system-ui, sans-serif;
@@ -58,7 +64,7 @@
             display: flex; align-items: center; justify-content: space-between;
             background: transparent;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0; transform: translateY(-12px);
+            opacity: 1; transform: none;
         }
         .nav.visible {
             opacity: 1; transform: translateY(0);
@@ -923,7 +929,7 @@
         opacity: 0.35;
     }
     .img-frame-placeholder .frame-label {
-        font-family: 'JetBrains Mono', monospace;
+        font-family: var(--font-mono);
         font-size: 0.65rem;
         color: rgba(255,141,28,0.5);
         text-transform: uppercase;
@@ -992,8 +998,34 @@
         filter: drop-shadow(0 2px 16px rgba(255,141,28,0.25));
     }
 
-    </style>
-    <link rel="icon" type="image/png" href="https://github.com/Evelez23/halftone-rip/blob/main/HRP-01.png?raw=true">
+    
+    /* ── Audit fixes ── */
+    [id] { scroll-margin-top: 76px; }
+    .nav-link { font-size: 0.68rem; }
+    @media (max-width: 520px) {
+        .nav-cta { display: none; }
+        .nav-group { gap: 12px; }
+        .hrp-logo-svg { height: 18px; }
+    }
+    @media (hover: none) {
+        .gallery-caption { transform: none; position: static; background: none; padding: 14px 4px 0; }
+    }
+    .audience-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 920px; margin: 56px auto 0; }
+    .audience-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 32px 28px; }
+    .audience-card h4 { font-family: var(--font-display); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 16px; color: var(--safety); }
+    .audience-card ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .audience-card li { font-size: 0.85rem; color: var(--smoke); display: flex; gap: 10px; }
+    .audience-card li::before { content: "✓"; color: var(--ember); font-weight: 700; }
+    @media (max-width: 700px) { .audience-grid { grid-template-columns: 1fr; } }
+    .video-placeholder { cursor: default; }
+
+    .preview-shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1100px; margin: 48px auto 0; }
+    @media (max-width: 900px) { .preview-shots { grid-template-columns: 1fr; } }
+    .has-image > .img-frame-placeholder, .has-image > .gallery-placeholder { display: none; }
+    .img-frame.has-image { border-style: solid; }
+    .slot-tag { font-family: var(--font-mono); font-size: 0.6rem; color: var(--deep-smoke); letter-spacing: 0.08em; text-align: center; }
+</style>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230a0a0a%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%279%27 fill=%27%23e8520a%27/%3E%3C/svg%3E">
 </head>
 <body>
 
@@ -1004,15 +1036,18 @@
     <div class="nav-group">
         <div class="nav-links">
             <a href="#problem" class="nav-link" data-en="The Challenge for Your Shop" data-es="El Reto de Tu Taller">The Challenge for Your Shop</a>
+            <a href="#story" class="nav-link" data-en="Why HRP" data-es="Por Qué HRP">Why HRP</a>
+            <a href="#preview" class="nav-link" data-en="Print Preview" data-es="Vista Previa">Print Preview</a>
             <a href="#vie" class="nav-link" data-en="Artwork Comparison" data-es="Comparación del Diseño">Artwork Comparison</a>
             <a href="#knowledge" class="nav-link" data-en="Color Library" data-es="Biblioteca de Colores">Color Library</a>
             <a href="#workflow" class="nav-link" data-en="How It Works" data-es="Cómo Funciona">How It Works</a>
             <a href="#features" class="nav-link" data-en="Shop Tools" data-es="Herramientas">Shop Tools</a>
+            <a href="#pricing" class="nav-link" data-en="Pricing" data-es="Precio">Pricing</a>
             <a href="#specs" class="nav-link" data-en="Requirements" data-es="Requisitos">Requirements</a>
         </div>
         <div class="lang-toggle">
-            <span class="active" data-lang="en">EN</span>
-            <span data-lang="es">ES</span>
+            <span class="active" data-lang="en" role="button" tabindex="0">EN</span>
+            <span data-lang="es" role="button" tabindex="0">ES</span>
         </div>
         <a href="#access" class="nav-cta" data-en="Get Beta Access" data-es="Acceder a la Beta">Get Beta Access</a>
     </div>
@@ -1024,7 +1059,7 @@
     <div class="hero-content">
         <div class="hero-tag">
             <span class="pulse-dot"></span>
-            <span data-en="BETA · MADE FOR SCREEN-PRINTING SHOPS" data-es="BETA · PENSADO PARA TALLERES DE SERIGRAFÍA">BETA · MADE FOR SCREEN-PRINTING SHOPS</span>
+            <span data-en="BETA · PREPRESS FOR TEXTILE SCREEN PRINTING" data-es="BETA · PREPRENSA PARA SERIGRAFÍA TEXTIL">BETA · PREPRESS FOR TEXTILE SCREEN PRINTING</span>
         </div>
         <div style="text-align:center;margin-bottom:24px;"><svg class="hrp-logo-svg hero-logo-svg" viewBox="0 0 231.2 25.6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" aria-label="Halftone RIP Pro"> <style type="text/css"> .st0{fill:#FFFFFF;} .st1{fill:#4FA0CA;} .st2{fill:#4F4B4A;} .st3{fill:#6B6B6B;} .st4{fill:#12A4C7;} </style> <g> <g> <polygon class="st0" points="16.5,15.2 26.6,15.2 25.2,22.7 30,22.7 33.3,5.1 28.4,5.1 27.2,11.7 17.2,11.6 18.3,5.1 13.4,5.1 10.3,22.7 15.2,22.7 "/> <path class="st0" d="M61.2,10.7l-4-2.7l-2.4,12.8l-5.1-5.4c1.3-0.3,2.3-0.8,3.2-1.7c1.2-1.2,1.9-2.9,1.9-4.6c0-2.6-1.7-3.8-4.2-4 H35.2l3.3,3.5l9.7,0C49,8.7,49.9,9,50,9.8c0.1,1-0.5,1.9-1.4,2.3c-0.5,0.2-1.1,0.3-1.7,0.3l-4.9,0l5,5.5l4.4,4.8l7.6,0L61.2,10.7z "/> <path class="st0" d="M59.3,7.4l1.1,1.2l9.4,0c0.7,0,1.3,0,1.9,0.3c2,0.9,1.7,3.7,0.3,5.3c-0.7,0.8-1.8,1.4-2.9,1.4l-7.6,0L60.9,19 l8.5,0c2-0.1,3.9-0.6,5.5-1.9c1.9-1.6,3-4.1,2.9-6.7c-0.2-3.2-2.9-5.2-5.9-5.2H57.1L59.3,7.4z"/> <polygon class="st1" points="38.6,16 40.9,18.5 44.7,22.7 48.5,22.7 43.7,17.6 42.4,16.2 36.9,10.4 35.3,8.7 32.7,22.7 37.4,22.7 "/> <circle class="st1" cx="71" cy="13.4" r="0.5"/> <circle class="st1" cx="71.2" cy="12" r="0.5"/> <path class="st1" d="M70,14.3c-0.2-0.1-0.4-0.2-0.6-0.1c-0.2,0.1-0.3,0.3-0.3,0.6c0,0.1,0,0.3,0.2,0.3c0.2,0,0.6-0.1,0.8-0.2 C70.3,14.8,70.1,14.4,70,14.3z"/> <circle class="st1" cx="69.8" cy="13.4" r="0.5"/> <circle class="st1" cx="68.4" cy="14.7" r="0.5"/> <circle class="st1" cx="68.5" cy="13.4" r="0.5"/> <path class="st1" d="M70.9,10.6c0,0.3,0.1,0.6,0.4,0.6c0.3,0,0.5-0.2,0.5-0.4c0-0.2-0.1-0.5-0.3-0.6 C71.2,10.1,70.9,10.3,70.9,10.6z"/> <circle class="st1" cx="69.9" cy="12" r="0.5"/> <circle class="st1" cx="67.1" cy="14.7" r="0.5"/> <circle class="st1" cx="68.7" cy="12" r="0.5"/> <circle class="st1" cx="67.3" cy="13.3" r="0.5"/> <circle class="st1" cx="70.1" cy="10.6" r="0.5"/> <path class="st1" d="M71.9,12c-0.1,0.3,0.1,0.6,0.6,0.6c0.2-0.3,0.2-0.7,0.2-1.1C72.2,11.4,71.9,11.7,71.9,12z"/> <path class="st1" d="M67,11.9c0,0.2,0.2,0.4,0.4,0.4s0.4-0.2,0.4-0.4s-0.2-0.4-0.4-0.4S67,11.7,67,11.9z"/> <circle class="st1" cx="68.8" cy="10.6" r="0.4"/> <path class="st1" d="M65.6,13.3c0,0.2,0.2,0.4,0.4,0.4s0.4-0.2,0.4-0.4s-0.2-0.4-0.4-0.4S65.6,13.1,65.6,13.3z"/> <circle class="st1" cx="65.9" cy="14.7" r="0.4"/> <path class="st1" d="M72.7,11.2c0-0.4-0.1-0.7-0.2-1.1c-0.3,0.1-0.4,0.4-0.4,0.7C72.2,11.1,72.4,11.3,72.7,11.2z"/> <path class="st1" d="M70.6,9.1C70.4,9,70,9,69.9,9.1c-0.2,0.1,0,0.5,0.1,0.6c0.2,0.1,0.4,0.1,0.5-0.1C70.6,9.5,70.8,9.1,70.6,9.1z "/> <path class="st1" d="M67.2,10.5c0,0.2,0.2,0.4,0.4,0.4c0.2,0,0.4-0.2,0.4-0.4s-0.2-0.4-0.4-0.4S67.2,10.3,67.2,10.5z"/> <path class="st1" d="M69.3,9C69.1,9,68.8,9,68.7,9c-0.2,0.1-0.1,0.4,0,0.5c0.1,0.1,0.4,0.1,0.5,0C69.3,9.4,69.4,9.1,69.3,9z"/> <circle class="st1" cx="66.1" cy="11.9" r="0.4"/> <circle class="st1" cx="64.7" cy="13.2" r="0.3"/> <path class="st1" d="M64.2,14.6c0,0.2,0.2,0.3,0.3,0.3c0.2,0,0.3-0.1,0.3-0.3c0-0.2-0.2-0.3-0.3-0.3 C64.4,14.3,64.2,14.5,64.2,14.6z"/> <path class="st1" d="M70.6,14.3c-0.2,0.1-0.3,0.3-0.2,0.6l0.9-0.6C71.1,14.1,70.8,14.2,70.6,14.3z"/> <path class="st1" d="M71.8,9.5c0-0.2-0.5-0.4-0.7-0.3c-0.2,0.1,0,0.4,0.2,0.5C71.4,9.8,71.8,9.8,71.8,9.5z"/> <path class="st1" d="M66,10.5c0,0.2,0.1,0.3,0.3,0.3s0.3-0.1,0.3-0.3s-0.1-0.3-0.3-0.3S66,10.3,66,10.5z"/> <path class="st1" d="M67.9,9.4C68,9.3,68,9.2,68,9c-0.2,0-0.4-0.1-0.5,0c-0.1,0.1-0.1,0.3,0.1,0.4C67.6,9.5,67.8,9.5,67.9,9.4z"/> <circle class="st1" cx="64.8" cy="11.8" r="0.3"/> <path class="st1" d="M71.8,13.8c0.3-0.3,0.4-0.6,0.5-0.9C71.8,12.9,71.6,13.4,71.8,13.8z"/> <path class="st1" d="M63.2,13.2c0,0.1,0.1,0.3,0.3,0.3s0.3-0.1,0.3-0.3c0-0.1-0.1-0.3-0.3-0.3S63.2,13.1,63.2,13.2z"/> <path class="st1" d="M63,14.6c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2s-0.1-0.2-0.2-0.2S63,14.5,63,14.6z"/> <path class="st1" d="M66.6,9c-0.1-0.1-0.3-0.1-0.4,0c-0.1,0-0.1,0.3,0.1,0.3c0.1,0.1,0.2,0.1,0.3,0C66.6,9.3,66.7,9.1,66.6,9z"/> <path class="st1" d="M64.7,10.4c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2s-0.1-0.2-0.2-0.2S64.7,10.3,64.7,10.4z"/> <circle class="st1" cx="63.5" cy="11.8" r="0.2"/> <path class="st1" d="M63.5,10.4c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2s-0.1-0.2-0.2-0.2C63.6,10.2,63.5,10.3,63.5,10.4z"/> <path class="st1" d="M65.3,9C65.2,9,65,9,65,9c-0.1,0.2,0.1,0.3,0.2,0.3C65.2,9.3,65.4,9.2,65.3,9z"/> <path class="st2" d="M62.2,11.7c0,0.1,0,0.1,0.1,0.1c0.1,0,0.1-0.1,0.1-0.1c0-0.1,0-0.1-0.1-0.1C62.2,11.6,62.2,11.7,62.2,11.7z" /> <circle class="st2" cx="62" cy="14.6" r="0.1"/> <path class="st2" d="M62.1,13.1c0,0.1,0,0.2,0,0.2s0.1,0,0.2-0.1c0-0.1,0-0.1,0-0.2C62.2,13.1,62.1,13.1,62.1,13.1z"/> <path class="st2" d="M64,9.1C64,9,63.9,9,63.8,9S63.7,9,63.7,9.1c0,0.1,0,0.1,0.1,0.1C63.9,9.2,64,9.1,64,9.1z"/> <circle class="st2" cx="62.4" cy="10.3" r="0.1"/> </g> <rect x="81.4" y="6.3" class="st3" width="0.3" height="16.4"/> <path class="st4" d="M219.1,20.4h-27.6c-2.2,0-3.9-1.8-3.9-3.9v-3.4c0-2.2,1.8-3.9,3.9-3.9h27.6c2.2,0,3.9,1.8,3.9,3.9v3.4 C223,18.6,221.2,20.4,219.1,20.4z"/> <g> <path class="st0" d="M95.1,11.3l-1.3,7.2c-0.1,0.2-0.3,0.5-0.5,0.5h-1.5c-0.2,0-0.4-0.2-0.4-0.5l0.5-2.6c0-0.1,0-0.1-0.1-0.1h-3 c-0.1,0-0.1,0-0.1,0.1l-0.5,2.6c-0.1,0.2-0.3,0.5-0.5,0.5h-1.5c-0.2,0-0.4-0.2-0.4-0.5l1.3-7.2c0.1-0.2,0.3-0.4,0.5-0.4h1.5 c0.2,0,0.4,0.2,0.4,0.4L89,13.8c0,0.1,0,0.1,0.1,0.1h3c0.1,0,0.1,0,0.1-0.1l0.5-2.5c0.1-0.2,0.3-0.4,0.5-0.4h1.5 C94.9,10.8,95.1,11,95.1,11.3z"/> <path class="st0" d="M94.5,18.4l4.7-7.1c0.2-0.3,0.6-0.4,1-0.4v0c0,0,0,0,0,0v0c0.1,0,0.2,0,0.4,0c0,0,0,0,0.1,0 c0.1,0,0.1,0,0.1,0c0.2,0,0.4,0,0.6,0c0,0,0.4,0,0.6,0.4l2.3,7.1c0,0.1,0,0.3-0.1,0.4c-0.1,0.1-0.2,0.2-0.3,0.2H102 c-0.1,0-0.2-0.1-0.3-0.2l-0.2-0.7h-3.9l-0.2,0.2l-0.3,0.4C97,18.9,96.9,19,96.7,19h-2c-0.1,0-0.2-0.1-0.3-0.2 C94.4,18.6,94.4,18.5,94.5,18.4z M98.8,16.1h2.1l-0.7-2.1L98.8,16.1z"/> <path class="st0" d="M106.8,10.8h1.5c0.2,0,0.4,0.2,0.4,0.4l-0.9,5.3c0,0.1,0.1,0.3,0.2,0.3h3.7c0.2,0,0.4,0.2,0.4,0.5l-0.2,1.2 c-0.1,0.2-0.3,0.5-0.5,0.5h-6c-0.2,0-0.4-0.2-0.4-0.5l1.3-7.2C106.2,11,106.5,10.8,106.8,10.8z"/> <path class="st0" d="M112.6,18.5l1.3-7.2c0.1-0.2,0.3-0.4,0.5-0.4h6.8c0.2,0,0.2,0.1,0.2,0.3l-0.3,1.5c0,0.1-0.2,0.3-0.3,0.3h-4.8 c-0.1,0-0.1,0-0.1,0.1l-0.2,0.8c0,0.1,0,0.1,0.1,0.1h3.8c0.2,0,0.2,0.1,0.2,0.3l-0.2,1.4c0,0.1-0.2,0.3-0.3,0.3h-3.8 c-0.1,0-0.1,0-0.1,0.1l-0.5,2.5c-0.1,0.2-0.3,0.5-0.5,0.5H113C112.7,19,112.5,18.8,112.6,18.5z"/> <path class="st0" d="M129.8,11.3l-0.2,1.2c-0.1,0.2-0.3,0.4-0.5,0.4h-2.2c-0.1,0-0.1,0-0.1,0.1l-1,5.5c-0.1,0.2-0.3,0.5-0.5,0.5 h-1.5c-0.2,0-0.4-0.2-0.4-0.5l1-5.5c0-0.1,0-0.1-0.1-0.1h-2.2c-0.2,0-0.4-0.2-0.4-0.4l0.2-1.2c0.1-0.2,0.3-0.4,0.5-0.4h7.1 C129.6,10.8,129.8,11,129.8,11.3z"/> <path class="st0" d="M139.1,12.9l-0.7,3.9c-0.2,1.2-1.4,2.1-2.5,2.1h-4.7c-1.2,0-2-1-1.8-2.1l0.7-3.9c0.2-1.2,1.4-2.1,2.5-2.1h4.7 C138.5,10.8,139.3,11.8,139.1,12.9z M136.6,13.2c0-0.1-0.1-0.3-0.2-0.3h-3.5c-0.1,0-0.3,0.1-0.3,0.3l-0.6,3.4 c0,0.1,0.1,0.3,0.2,0.3h3.5c0.1,0,0.3-0.1,0.3-0.3L136.6,13.2z"/> <path class="st0" d="M142.4,14.4l-0.7,4.1c-0.1,0.2-0.3,0.5-0.5,0.5h-1.5c-0.2,0-0.4-0.2-0.4-0.5l1.3-7.2c0.1-0.2,0.3-0.4,0.5-0.4 h1.9c0.1,0,0.2,0.1,0.3,0.2l2.3,4.1c0.1,0.1,0.2,0.1,0.2,0l0.7-3.8c0.1-0.2,0.3-0.4,0.5-0.4h1.5c0.2,0,0.4,0.2,0.4,0.4l-1.3,7.2 c-0.1,0.2-0.3,0.5-0.5,0.5h-1.7c-0.1,0-0.2-0.1-0.3-0.2l-2.5-4.4C142.6,14.3,142.5,14.3,142.4,14.4z"/> <path class="st0" d="M149,18.5l1.3-7.2c0.1-0.2,0.3-0.4,0.5-0.4h6.9c0.1,0,0.2,0.1,0.2,0.3l-0.3,1.5c0,0.1-0.2,0.3-0.3,0.3h-4.8 c-0.1,0-0.1,0-0.1,0.1l-0.1,0.8c0,0.1,0,0.1,0.1,0.1h3.8c0.1,0,0.2,0.1,0.2,0.3l-0.2,1.4c0,0.1-0.2,0.3-0.3,0.3H152 c-0.1,0-0.1,0-0.1,0.1l-0.1,0.8c0,0,0,0.1,0.1,0.1h4.8c0.1,0,0.2,0.1,0.2,0.3l-0.3,1.6c0,0.1-0.2,0.3-0.3,0.3h-6.9 C149.1,19,148.9,18.8,149,18.5z"/> <path class="st0" d="M163.2,19c-0.2,0-0.4-0.2-0.4-0.5l1.3-7.2c0.1-0.2,0.3-0.4,0.5-0.4h5.8c1.2,0,2,0.9,1.8,2.1l-0.3,1.9 c-0.1,0.8-0.7,1.5-1.5,1.9c-0.1,0-0.1,0.1-0.1,0.1l1,1.7c0.1,0.2,0,0.5-0.3,0.5c-0.8,0-1.3,0-1.6,0c-0.6,0-0.7,0-0.8-0.2l-0.9-1.7 c0-0.1-0.1-0.1-0.2-0.1h-1.9c-0.1,0-0.1,0-0.1,0.1l-0.3,1.5c-0.1,0.2-0.3,0.5-0.5,0.5L163.2,19L163.2,19z M165.9,14.8 C165.9,14.8,166,14.9,165.9,14.8l3.1,0.1c0.2,0,0.4-0.2,0.5-0.4l0.2-1.2c0-0.2-0.1-0.4-0.3-0.4h-3c-0.1,0-0.1,0-0.1,0.1 L165.9,14.8z"/> <path class="st0" d="M175.8,10.8c0.2,0,0.4,0.2,0.4,0.4l-1.3,7.2c-0.1,0.2-0.3,0.5-0.5,0.5h-1.5c-0.2,0-0.4-0.2-0.4-0.5l1.3-7.2 c0.1-0.2,0.3-0.4,0.5-0.4L175.8,10.8z"/> <path class="st0" d="M185.2,14.8c-0.2,1.2-1.4,2.1-2.5,2.1H179c-0.1,0-0.1,0-0.1,0.1l-0.3,1.5c-0.1,0.2-0.3,0.5-0.5,0.5h-1.5 c-0.2,0-0.4-0.2-0.4-0.5l1.3-7.2c0.1-0.2,0.3-0.4,0.5-0.4h5.8c1.2,0,2,0.9,1.8,2.1L185.2,14.8z M182.7,12.9h-3 c-0.1,0-0.1,0-0.1,0.1l-0.3,1.8c0,0.1,0,0.1,0.1,0.1h3c0.2,0,0.4-0.2,0.5-0.4l0.2-1.2C183.1,13,182.9,12.9,182.7,12.9z"/> <path d="M199.8,14.8c-0.2,1.2-1.4,2.1-2.5,2.1h-3.7c-0.1,0-0.1,0-0.1,0.1l-0.3,1.5c-0.1,0.2-0.3,0.5-0.5,0.5h-1.5 c-0.2,0-0.4-0.2-0.4-0.5l1.3-7.2c0.1-0.2,0.3-0.4,0.5-0.4h5.8c1.2,0,2,0.9,1.8,2.1L199.8,14.8z M197.3,12.9h-3 c-0.1,0-0.1,0-0.1,0.1l-0.3,1.8c0,0.1,0,0.1,0.1,0.1h3c0.2,0,0.4-0.2,0.5-0.4l0.2-1.2C197.7,13,197.5,12.9,197.3,12.9z"/> <path d="M200.5,19c-0.2,0-0.4-0.2-0.4-0.5l1.3-7.2c0.1-0.2,0.3-0.4,0.5-0.4h5.8c1.2,0,2,0.9,1.8,2.1l-0.3,1.9 c-0.1,0.8-0.7,1.5-1.5,1.9c-0.1,0-0.1,0.1-0.1,0.1l1,1.7c0.1,0.2,0,0.5-0.3,0.5c-0.8,0-1.3,0-1.6,0c-0.6,0-0.7,0-0.8-0.2l-0.9-1.7 c0-0.1-0.1-0.1-0.2-0.1H203c-0.1,0-0.1,0-0.1,0.1l-0.3,1.5c-0.1,0.2-0.3,0.5-0.5,0.5L200.5,19L200.5,19z M203.3,14.8 C203.3,14.8,203.3,14.9,203.3,14.8l3.1,0.1c0.2,0,0.4-0.2,0.5-0.4l0.2-1.2c0-0.2-0.1-0.4-0.3-0.4h-3c-0.1,0-0.1,0-0.1,0.1 L203.3,14.8z"/> <path d="M219.7,12.9l-0.7,3.9c-0.2,1.2-1.4,2.1-2.5,2.1h-4.7c-1.2,0-2-1-1.8-2.1l0.7-3.9c0.2-1.2,1.4-2.1,2.5-2.1h4.7 C219.1,10.8,219.9,11.8,219.7,12.9z M217.2,13.2c0-0.1-0.1-0.3-0.2-0.3h-3.5c-0.1,0-0.3,0.1-0.3,0.3l-0.6,3.4 c0,0.1,0.1,0.3,0.2,0.3h3.5c0.1,0,0.3-0.1,0.3-0.3L217.2,13.2z"/> </g> </g> </svg></div>
         <h1 class="hero-h1">
@@ -1032,7 +1067,7 @@
             <span class="line" data-en="For Your Shop." data-es="Para Tu Taller.">For Your Shop.</span>
             <span class="line" data-en="Built for small and mid-size screen-printing shops." data-es="Pensado para talleres de serigrafía pequeños y medianos.">Built for small and mid-size screen-printing shops.</span>
         </h1>
-        <p class="hero-desc" data-en="Keep creating artwork in Photoshop or the tools you already know. Use HRP to prepare, review and export screen-printing separations with more control—without taking on an oversized industrial system." data-es="Sigue creando tus diseños en Photoshop o con las herramientas que ya conoces. Usa HRP para preparar, revisar y exportar separaciones para serigrafía con más control, sin tener que asumir un sistema industrial sobredimensionado.">Keep creating artwork in Photoshop or the tools you already know. Use HRP to prepare, review and export screen-printing separations with more control—without taking on an oversized industrial system.</p>
+        <p class="hero-desc" data-en="Separate in Photoshop, add your guides in Illustrator and export PDF/X-4 or PostScript. Use HRP to prepare, review and export screen-printing separations with more control—without taking on an oversized industrial system." data-es="Separa en Photoshop, agrega tus guías en Illustrator y exporta PDF/X-4 o PostScript. Usa HRP para preparar, revisar y exportar separaciones para serigrafía con más control, sin tener que asumir un sistema industrial sobredimensionado.">Separate in Photoshop, add your guides in Illustrator and export PDF/X-4 or PostScript. Use HRP to prepare, review and export screen-printing separations with more control—without taking on an oversized industrial system.</p>
         <div class="hero-actions">
             <a href="#vie" class="btn-primary" data-en="See How HRP Works →" data-es="Ver Cómo Funciona HRP →">See How HRP Works →</a>
             <a href="#access" class="btn-secondary" data-en="Try the Beta" data-es="Probar la Beta">Try the Beta</a>
@@ -1051,6 +1086,16 @@
     </div>
 </div>
 
+<section class="section" id="appshot" style="padding-top:64px;padding-bottom:0;">
+    <div class="reveal">
+        <div class="img-frame" data-slot="hero-main" data-size="1920×1080" style="max-width:1100px;margin:0 auto;">
+            <div class="img-frame-placeholder" style="min-height:360px;">
+                <div class="frame-icon">🖥</div>
+                <div class="frame-label">HRP · main window</div>
+            </div>
+        </div>
+    </div>
+</section>
 <section class="section bg-steel" id="problem">
     <div class="problem-layout">
         <div class="reveal">
@@ -1069,23 +1114,90 @@
                     <span class="tdot r"></span>
                     <span class="tdot y"></span>
                     <span class="tdot g"></span>
-                    <span class="terminal-label" data-en="separation — process in progress" data-es="separación — proceso en curso">separation — process in progress</span>
+                    <span class="terminal-label" data-en="example · pre-production check" data-es="ejemplo · revisión previa a producción">example · pre-production check</span>
                 </div>
                 <div class="terminal-body" id="terminalBody">
                     <div class="t-line cmd">▶ Loading artwork.pdf — 4 channels detected</div>
-                    <div class="t-line warn">⚠  LPI/DPI Ratio: 5.4:1 — recommended 8:1 or higher</div>
+                    <div class="t-line warn">⚠  DPI/LPI ratio: 5.4:1 — low for a smooth tonal range</div>
                     <div class="t-line err">✕  Channel "Spot_3" has no identifiable color</div>
                     <div class="t-line warn">⚠  Ink coverage: 94% — mesh flooding risk</div>
                     <div class="t-line err">✕  Dark garment — white base not detected</div>
                     <div class="t-line warn">⚠  2 plates with duplicate channel names</div>
-                    <div class="t-line">⏱  Time: 51.2s</div>
-                    <div class="t-line err">✕  FAILURE — 4 critical warnings before printing</div>
+                    <div class="t-line err">✕  5 issues found (2 critical) — review before printing</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+<section class="section" id="story">
+    <div class="reveal" style="text-align:center;">
+        <div class="eyebrow center" data-en="Why HRP Exists" data-es="Por Qué Existe HRP">Why HRP Exists</div>
+        <h2 class="section-h2" style="margin:0 auto 24px;text-align:center;" data-en="Born in a print shop, from mistakes you only see after printing." data-es="Nació en un taller, de errores que solo se ven después de imprimir.">Born in a print shop, from mistakes you only see after printing.</h2>
+    </div>
+    <div class="audience-grid reveal reveal-d2">
+        <div class="audience-card">
+            <h4 data-en="From film sets to a merged preview" data-es="De juegos de filmina a una vista unida">From film sets to a merged preview</h4>
+            <p class="section-desc" style="margin:0;" data-en="In a commercial print shop, the boss would arrive with a printed set of films, one per color (cyan, magenta, yellow and black). Stacking them gave the real image. That idea became HRP's merged preview: every plate is joined into one image of how the job will look, which you can then compare against a reference JPG." data-es="En una imprenta comercial, el jefe llegaba con un juego de filminas impresas, una por color (cian, magenta, amarillo y negro). Al unirlas aparecía la imagen real. De esa idea nació la vista unida de HRP: todas las placas se juntan en una sola imagen de cómo quedará el trabajo, y luego puedes compararla con un JPG de referencia.">In a commercial print shop, the boss would arrive with a printed set of films, one per color (cyan, magenta, yellow and black). Stacking them gave the real image. That idea became HRP's merged preview: every plate is joined into one image of how the job will look, which you can then compare against a reference JPG.</p>
+        </div>
+        <div class="audience-card">
+            <h4 data-en="The mast that showed through the flag" data-es="El mástil que se veía a través de la bandera">The mast that showed through the flag</h4>
+            <p class="section-desc" style="margin:0 0 16px;" data-en="A design had a ship with a black mast and a red flag on top of it. The separation looked fine, but the black was never knocked out under the red. Samples and tests were made, and only after printing did the team see the black mast showing through the flag. A strong color like black shows through, even with red printed over it. This is the kind of problem HRP is built to reveal beforehand." data-es="Un diseño tenía un barco con un mástil negro y una bandera roja encima. La separación parecía correcta, pero el negro nunca se noqueó bajo el rojo. Se hicieron muestras y pruebas, y solo ya impreso el equipo vio el mástil negro a través de la bandera. Un color fuerte como el negro se transparenta aunque se imprima rojo encima. Este es el tipo de problema que HRP está hecho para mostrar antes.">A design had a ship with a black mast and a red flag on top of it. The separation looked fine, but the black was never knocked out under the red. Samples and tests were made, and only after printing did the team see the black mast showing through the flag. A strong color like black shows through, even with red printed over it. This is the kind of problem HRP is built to reveal beforehand.</p>
+        </div>
+    </div>
+    <div class="audience-grid reveal reveal-d2" style="margin-top:24px;">
+        <div>
+            <svg viewBox="0 0 220 175" role="img" aria-label="Expected: red covers the mast" style="width:100%;height:auto;display:block;background:#cfcfcf;border-radius:10px;">
+                    <polygon points="98,32 160,40 98,62" fill="#d62020"/><rect x="107" y="18" width="6" height="14" fill="#111"/><rect x="107" y="62" width="6" height="68" fill="#111"/>
+                    <path d="M60 130 H160 L146 150 H74 Z" fill="#333"/>
+                    <text x="110" y="168" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#333" data-en="Expected: red covers the mast" data-es="Esperado: el rojo cubre el mástil">Expected: red covers the mast</text>
+                </svg>
+        </div>
+        <div>
+            <svg viewBox="0 0 220 175" role="img" aria-label="Printed: black shows through" style="width:100%;height:auto;display:block;background:#cfcfcf;border-radius:10px;">
+                    <polygon points="98,32 160,40 98,62" fill="#d62020"/><rect x="107" y="18" width="6" height="112" fill="#111"/>
+                    <path d="M60 130 H160 L146 150 H74 Z" fill="#333"/>
+                    <text x="110" y="168" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#333" data-en="Printed: black shows through" data-es="Impreso: el negro se transparenta">Printed: black shows through</text>
+                </svg>
+        </div>
+    </div>
+    <p class="section-desc" style="margin:16px auto 0;text-align:center;font-size:0.7rem;" data-en="Illustration of a real case, recreated with original artwork. The job that inspired it used licensed artwork that cannot be shown." data-es="Ilustración de un caso real, recreado con arte original. El trabajo que lo inspiró usaba arte con licencia que no puede mostrarse.">Illustration of a real case, recreated with original artwork. The job that inspired it used licensed artwork that cannot be shown.</p>
+</section>
+<section class="section why-section" id="preview">
+    <div class="reveal" style="text-align:center;">
+        <div class="eyebrow center" data-en="Print Preview" data-es="Vista Previa de Impresión">Print Preview</div>
+        <h2 class="section-h2" style="margin:0 auto 24px;text-align:center;" data-en="See how it will look on the shirt before burning screens." data-es="Mira cómo se verá en la prenda antes de revelar pantallas.">See how it will look on the shirt before burning screens.</h2>
+        <p class="section-desc" style="margin:0 auto;text-align:center;" data-en="Once HRP creates the halftone dots, it merges all the plates into one image that approximates the screen-printed result. Illustrative approximation: effects like ink spread are not simulated yet." data-es="Una vez que HRP genera los puntos de trama, une todas las placas en una imagen que aproxima el resultado impreso en serigrafía. Aproximación ilustrativa: efectos como el estallado de tinta todavía no se simulan.">Once HRP creates the halftone dots, it merges all the plates into one image that approximates the screen-printed result. Illustrative approximation: effects like ink spread are not simulated yet.</p>
+    </div>
+    <div class="preview-shots reveal reveal-d2">
+        <div>
+            <div class="img-frame" data-slot="preview-result" data-size="1200×900"><div class="img-frame-placeholder"><div class="frame-icon">🖼</div><div class="frame-label" data-en="Simulated result" data-es="Resultado simulado">Simulated result</div></div></div>
+        </div>
+        <div>
+            <div class="img-frame" data-slot="preview-reference" data-size="1200×900"><div class="img-frame-placeholder"><div class="frame-icon">🖼</div><div class="frame-label" data-en="Reference image" data-es="Imagen de referencia">Reference image</div></div></div>
+        </div>
+        <div>
+            <div class="img-frame" data-slot="preview-diff" data-size="1200×900"><div class="img-frame-placeholder"><div class="frame-icon">🖼</div><div class="frame-label" data-en="Difference map" data-es="Mapa de diferencias">Difference map</div></div></div>
+        </div>
+    </div>
+    <div class="audience-grid reveal reveal-d2">
+        <div class="audience-card">
+            <h4 data-en="Simulated result" data-es="Resultado simulado">Simulated result</h4>
+            <ul>
+                <li data-en="Dots from every plate merged into one apparent image" data-es="Puntos de cada placa unidos en una sola imagen aparente">Dots from every plate merged into one apparent image</li>
+                <li data-en="Review the combined colors before exposing a single screen" data-es="Revisa los colores combinados antes de exponer una sola pantalla">Review the combined colors before exposing a single screen</li>
+            </ul>
+        </div>
+        <div class="audience-card">
+            <h4 data-en="Compare with a reference" data-es="Compara con una referencia">Compare with a reference</h4>
+            <ul>
+                <li data-en="Upload a reference image and compare it with the merged result" data-es="Sube una imagen de referencia y compárala con el resultado unido">Upload a reference image and compare it with the merged result</li>
+                <li data-en="Catch missing objects, fonts or numbers and changes made in the process" data-es="Detecta objetos, fuentes o números faltantes y cambios hechos en el proceso">Catch missing objects, fonts or numbers and changes made in the process</li>
+                <li data-en="See colors that were not knocked out and stayed in the background" data-es="Ve colores que no quedaron noqueados y se quedaron de fondo">See colors that were not knocked out and stayed in the background</li>
+            </ul>
+        </div>
+    </div>
+</section>
 <section class="section vie-section" id="vie">
     <div class="vie-layout">
         <div class="reveal">
@@ -1094,19 +1206,19 @@
                 <span class="em">Review Your Artwork</span><br>
                 <span class="safe">Before Printing</span>
             </h2>
-            <p class="section-desc" data-en="Check production files before burning screens or starting a run. HRP can compare the original artwork with the generated separation composite and help you spot missing, extra or shifted elements." data-es="Revisa los archivos antes de revelar las pantallas o iniciar una tirada. HRP puede comparar el diseño original con la composición de las separaciones generadas y ayudarte a detectar elementos faltantes, adicionales o desplazados.">Check production files before burning screens or starting a run. HRP can compare the original artwork with the generated separation composite and help you spot missing, extra or shifted elements.</p>
+            <p class="section-desc" data-en="Load a reference image and HRP compares it with the composite of all your separations. It helps you spot missing objects, fonts or numbers, changes made along the process, and colors that were not knocked out." data-es="Carga una imagen de referencia y HRP la compara con la composición de todas tus separaciones. Te ayuda a detectar objetos, fuentes o números faltantes, cambios ocurridos en el proceso y colores que no quedaron noqueados.">Load a reference image and HRP compares it with the composite of all your separations. It helps you spot missing objects, fonts or numbers, changes made along the process, and colors that were not knocked out.</p>
             <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px;">
                 <div style="display:flex;align-items:center;gap:12px;font-size:0.78rem;color:var(--smoke);">
                     <span style="color:var(--fail);font-weight:700;font-size:1rem;">×</span>
-                    <span data-en="Missing knockout" data-es="Knockout faltante">Missing knockout</span>
+                    <span data-en="Missing objects, fonts or numbers" data-es="Objetos, fuentes o números faltantes">Missing objects, fonts or numbers</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;font-size:0.78rem;color:var(--smoke);">
                     <span style="color:var(--fail);font-weight:700;font-size:1rem;">×</span>
-                    <span data-en="Unexpected overlap" data-es="Superposición inesperada">Unexpected overlap</span>
+                    <span data-en="Color not knocked out (left in the background)" data-es="Color sin noquear (quedó de fondo)">Color not knocked out (left in the background)</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;font-size:0.78rem;color:var(--smoke);">
                     <span style="color:var(--fail);font-weight:700;font-size:1rem;">×</span>
-                    <span data-en="Geometry changes" data-es="Cambios de geometría">Geometry changes</span>
+                    <span data-en="Changes made along the process" data-es="Cambios ocurridos en el proceso">Changes made along the process</span>
                 </div>
             </div>
             <p class="section-desc" style="margin-top:28px;" data-en="A small file error can cost screens, ink, garments and valuable production time." data-es="Un pequeño error en un archivo puede costar pantallas, tinta, prendas y tiempo valioso de producción.">A small file error can cost screens, ink, garments and valuable production time.</p>
@@ -1116,15 +1228,15 @@
                 <div class="vie-step">
                     <div class="vie-step-num">01</div>
                     <div class="vie-step-text">
-                        PDF
-                        <small data-en="Approved artwork loaded" data-es="Arte aprobado cargado">Approved artwork loaded</small>
+                        PDF / PS
+                        <small data-en="Separated file loaded" data-es="Archivo separado cargado">Separated file loaded</small>
                     </div>
                 </div>
                 <div class="vie-arrow">↓</div>
                 <div class="vie-step">
                     <div class="vie-step-num">02</div>
                     <div class="vie-step-text">
-                        Render
+                        <span data-en="Render" data-es="Generación">Render</span>
                         <small data-en="Production result generated" data-es="Resultado de producción generado">Production result generated</small>
                     </div>
                 </div>
@@ -1132,8 +1244,8 @@
                 <div class="vie-step">
                     <div class="vie-step-num">03</div>
                     <div class="vie-step-text">
-                        Comparison
-                        <small data-en="Structural analysis in real time" data-es="Análisis estructural en tiempo real">Structural analysis in real time</small>
+                        <span data-en="Comparison" data-es="Comparación">Comparison</span>
+                        <small data-en="Composite vs. reference image" data-es="Composición vs. imagen de referencia">Composite vs. reference image</small>
                     </div>
                 </div>
                 <div class="vie-arrow">↓</div>
@@ -1187,7 +1299,7 @@
                 <div class="confidence-list-item"><span class="check">✓</span> <span data-en="Geometry Verified" data-es="Geometría Verificada">Geometry Verified</span></div>
                 <div class="confidence-list-item"><span class="check">✓</span> <span data-en="No Missing Objects" data-es="Sin Objetos Faltantes">No Missing Objects</span></div>
                 <div class="confidence-list-item"><span class="check">✓</span> <span data-en="No Unexpected Additions" data-es="Sin Adiciones Inesperadas">No Unexpected Additions</span></div>
-                <div class="confidence-list-item"><span class="check">✓</span> <span data-en="Print Ready" data-es="Listo para Imprimir">Print Ready</span></div>
+                <div class="confidence-list-item"><span class="check">✓</span> <span data-en="Ready for Review" data-es="Listo para Revisión">Ready for Review</span></div>
             </div>
         </div>
     </div>
@@ -1206,7 +1318,7 @@
         <div class="workflow-step">
             <span class="workflow-icon">📥</span>
             <div class="workflow-title" data-en="Import" data-es="Importar">Import</div>
-            <div class="workflow-desc" data-en="Reads professional PostScript and PDF files with full channel support." data-es="Lee archivos PostScript y PDF profesionales con soporte completo de canales.">Reads professional PostScript and PDF files with full channel support.</div>
+            <div class="workflow-desc" data-en="Reads PDF (PDF/X-4) and PostScript (.ps) files exported from Illustrator, with named spot channels." data-es="Lee archivos PDF (PDF/X-4) y PostScript (.ps) exportados desde Illustrator, con canales spot con nombre.">Reads PDF (PDF/X-4) and PostScript (.ps) files exported from Illustrator, with named spot channels.</div>
         </div>
         <div class="workflow-step">
             <span class="workflow-icon">🔍</span>
@@ -1216,12 +1328,12 @@
         <div class="workflow-step">
             <span class="workflow-icon">🧠</span>
             <div class="workflow-title" data-en="Color Library" data-es="Biblioteca de Colores">Color Library</div>
-            <div class="workflow-desc" data-en="Understands textile printing rules. Not just colors. Production knowledge." data-es="Comprende las reglas de impresión textil. No solo colores. Conocimiento de producción.">Understands textile printing rules. Not just colors. Production knowledge.</div>
+            <div class="workflow-desc" data-en="Recognizes common textile channel names (underbase, highlight, black…) and maps them to your shop's colors." data-es="Reconoce nombres comunes de canales textiles (base, refuerzo, negro…) y los asocia con los colores de tu taller.">Recognizes common textile channel names (underbase, highlight, black…) and maps them to your shop's colors.</div>
         </div>
         <div class="workflow-step">
             <span class="workflow-icon">🎯</span>
             <div class="workflow-title" data-en="Artwork Check" data-es="Revisión del Diseño">Artwork Check</div>
-            <div class="workflow-desc" data-en="Verifies that nothing changed between approved artwork and production result." data-es="Verifica que nada cambió entre el arte aprobado y el resultado de producción.">Verifies that nothing changed between approved artwork and production result.</div>
+            <div class="workflow-desc" data-en="Compares the composite of your separations with a reference image to flag differences." data-es="Compara la composición de tus separaciones con una imagen de referencia para señalar diferencias.">Compares the composite of your separations with a reference image to flag differences.</div>
         </div>
         <div class="workflow-step">
             <span class="workflow-icon">⚙️</span>
@@ -1231,7 +1343,7 @@
         <div class="workflow-step">
             <span class="workflow-icon">🔲</span>
             <div class="workflow-title" data-en="Halftone" data-es="Semitono">Halftone</div>
-            <div class="workflow-desc" data-en="Cosine spot functions · 5 dot shapes · calibrated angles per channel · 9 plates at 600 DPI in ~2 min." data-es="Spot functions coseno · 5 formas de punto · ángulos calibrados por canal · 9 placas a 600 DPI en ~2 min.">Cosine spot functions · 5 dot shapes · calibrated angles per channel · 9 plates at 600 DPI in ~2 min.</div>
+            <div class="workflow-desc" data-en="5 dot shapes · adjustable angles per channel · example: 9 plates at 600 DPI in about 2 min (varies by PC)." data-es="5 formas de punto · ángulos ajustables por canal · ejemplo: 9 placas a 600 DPI en ~2 min (según el equipo).">5 dot shapes · adjustable angles per channel · example: 9 plates at 600 DPI in about 2 min (varies by PC).</div>
         </div>
     </div>
 </section>
@@ -1253,7 +1365,7 @@
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;font-size:0.78rem;color:var(--smoke);">
                     <span style="color:var(--safety);font-weight:700;">✓</span>
-                    <span data-en="Understands separation names in any language" data-es="Comprende nombres de separación en cualquier idioma">Understands separation names in any language</span>
+                    <span data-en="Recognizes separation names in English, Spanish and Portuguese" data-es="Reconoce nombres de separación en inglés, español y portugués">Recognizes separation names in English, Spanish and Portuguese</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;font-size:0.78rem;color:var(--smoke);">
                     <span style="color:var(--safety);font-weight:700;">✓</span>
@@ -1261,7 +1373,7 @@
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;font-size:0.78rem;color:var(--smoke);">
                     <span style="color:var(--safety);font-weight:700;">✓</span>
-                    <span data-en="Learns from production libraries" data-es="Aprende de bibliotecas de producción">Learns from production libraries</span>
+                    <span data-en="Reuses your production libraries" data-es="Reutiliza tus bibliotecas de producción">Reuses your production libraries</span>
                 </div>
             </div>
         </div>
@@ -1270,28 +1382,28 @@
                 <div class="knowledge-item">
                     <span class="knowledge-item-icon">📚</span>
                     <div class="knowledge-item-text">
-                        Import Adobe ASE Libraries
-                        <small data-en="Bring your existing color swatches directly into HRP" data-es="Trae tus muestras de color existentes directamente a HRP">Bring your existing color swatches directly into HRP</small>
+                        <span data-en="Import Adobe ASE Libraries" data-es="Importa Bibliotecas ASE de Adobe">Import Adobe ASE Libraries</span>
+                        <small data-en="Load any brand or team library — or build your own palette" data-es="Carga cualquier biblioteca de marca o equipo, o crea tu propia paleta">Load any brand or team library — or build your own palette</small>
                     </div>
                 </div>
                 <div class="knowledge-item">
                     <span class="knowledge-item-icon">🎨</span>
                     <div class="knowledge-item-text">
-                        Create Your Own Production Colors
+                        <span data-en="Create Your Own Production Colors" data-es="Crea Tus Propios Colores de Producción">Create Your Own Production Colors</span>
                         <small data-en="Build a library that matches your shop's exact workflow" data-es="Construye una biblioteca que coincida con el flujo exacto de tu taller">Build a library that matches your shop's exact workflow</small>
                     </div>
                 </div>
                 <div class="knowledge-item">
                     <span class="knowledge-item-icon">🔄</span>
                     <div class="knowledge-item-text">
-                        Share Libraries Across Teams
+                        <span data-en="Share Libraries Across Teams" data-es="Comparte Bibliotecas entre Equipos">Share Libraries Across Teams</span>
                         <small data-en="Consistency across operators, shifts, and locations" data-es="Consistencia entre operadores, turnos y ubicaciones">Consistency across operators, shifts, and locations</small>
                     </div>
                 </div>
                 <div class="knowledge-item">
                     <span class="knowledge-item-icon">✓</span>
                     <div class="knowledge-item-text">
-                        Keep Your Workflow Consistent
+                        <span data-en="Keep Your Workflow Consistent" data-es="Mantén Tu Flujo Consistente">Keep Your Workflow Consistent</span>
                         <small data-en="Same colors, same names, same results — every time" data-es="Mismos colores, mismos nombres, mismos resultados — siempre">Same colors, same names, same results — every time</small>
                     </div>
                 </div>
@@ -1315,35 +1427,35 @@
             <div class="feature-badge" data-en="Automatic" data-es="Automático">Automatic</div>
             <h3 data-en="Automatic Plate Organization" data-es="Organización Automática de Placas">Automatic Plate Organization</h3>
             <p data-en="Recognizes common channel roles such as base, spot, highlight and black to help organize separations for review and output." data-es="Reconoce funciones comunes de canales, como base, spot, refuerzo y negro, para ayudar a organizar las separaciones antes de revisarlas y exportarlas.">Recognizes common channel roles such as base, spot, highlight and black to help organize separations for review and output.</p>
-            <div class="img-frame">
+            <div class="img-frame" data-slot="feat-plates" data-size="1200×750">
                 <div class="img-frame-placeholder">
                     <div class="frame-icon">🗂</div>
-                    <div class="frame-label">Orden de placas · Preview</div>
-                    <div class="frame-hint">Captura del panel de separaciones con orden de impresión</div>
+                    <div class="frame-label" data-en="Plate order · Preview" data-es="Orden de placas · Preview">Plate order · Preview</div>
+                    <div class="frame-hint" data-en="Screenshot of the separations panel with print order" data-es="Captura del panel de separaciones con orden de impresión">Screenshot of the separations panel with print order</div>
                 </div>
             </div>
         </div>
         <div class="feature-card-img reveal reveal-d2">
             <div class="feature-badge" data-en="Adaptive" data-es="Adaptativo">Adaptive</div>
             <h3 data-en="Shop Color Library" data-es="Biblioteca de Colores del Taller">Shop Color Library</h3>
-            <p data-en="Match separation names to your shop's ink colors, maintain a reusable color library and import ASE swatches." data-es="Relaciona los nombres de las separaciones con las tintas de tu taller, conserva una biblioteca de colores reutilizable e importa muestras ASE.">Match separation names to your shop's ink colors, maintain a reusable color library and import ASE swatches.</p>
-            <div class="img-frame">
+            <p data-en="Match separation names to your shop's ink colors, maintain a reusable color library and import Adobe ASE swatch libraries." data-es="Relaciona los nombres de las separaciones con las tintas de tu taller, conserva una biblioteca de colores reutilizable e importa bibliotecas de muestras Adobe ASE.">Match separation names to your shop's ink colors, maintain a reusable color library and import Adobe ASE swatch libraries.</p>
+            <div class="img-frame" data-slot="feat-colors" data-size="1200×750">
                 <div class="img-frame-placeholder">
                     <div class="frame-icon">🎨</div>
-                    <div class="frame-label">Knowledge Engine · Resolución de color</div>
-                    <div class="frame-hint">Captura mostrando chips de color resueltos por nombre</div>
+                    <div class="frame-label" data-en="Knowledge Engine · Color resolution" data-es="Knowledge Engine · Resolución de color">Knowledge Engine · Color resolution</div>
+                    <div class="frame-hint" data-en="Screenshot showing colors resolved by name" data-es="Captura mostrando chips de color resueltos por nombre">Screenshot showing colors resolved by name</div>
                 </div>
             </div>
         </div>
         <div class="feature-card-img reveal reveal-d3">
             <div class="feature-badge" data-en="Preventive" data-es="Preventivo">Preventive</div>
             <h3 data-en="Artwork & Separation Check" data-es="Revisión de Diseño y Separaciones">Artwork & Separation Check</h3>
-            <p data-en="Compare the combined separations with the original artwork. A difference view can help reveal missing, extra or shifted elements before production." data-es="Composite de todas las separaciones vs. arte original — píxel a píxel. El mapa de diferencias resalta lo que falta, sobra o está desplazado antes de llegar a la prensa.">Compare the combined separations with the original artwork. A difference view can help reveal missing, extra or shifted elements before production.</p>
-            <div class="img-frame">
+            <p data-en="Compare the combined separations with a reference image you upload. A difference view can help reveal missing, extra or shifted elements before production." data-es="Compara las separaciones combinadas con una imagen de referencia que cargas. Un mapa de diferencias ayuda a detectar elementos faltantes, adicionales o desplazados antes de producir.">Compare the combined separations with a reference image you upload. A difference view can help reveal missing, extra or shifted elements before production.</p>
+            <div class="img-frame" data-slot="feat-check" data-size="1200×750">
                 <div class="img-frame-placeholder">
                     <div class="frame-icon">🔬</div>
-                    <div class="frame-label">Visual Integrity™ · Mapa de diferencias</div>
-                    <div class="frame-hint">Captura del panel comparador con score y mapa de diferencias</div>
+                    <div class="frame-label" data-en="Visual Integrity™ · Difference map" data-es="Visual Integrity™ · Mapa de diferencias">Visual Integrity™ · Difference map</div>
+                    <div class="frame-hint" data-en="Screenshot of the comparison panel with score and difference map" data-es="Captura del panel comparador con score y mapa de diferencias">Screenshot of the comparison panel with score and difference map</div>
                 </div>
             </div>
         </div>
@@ -1351,11 +1463,11 @@
             <div class="feature-badge" data-en="Professional" data-es="Profesional">Professional</div>
             <h3 data-en="Halftone Engine" data-es="Motor de Semitono">Halftone Engine</h3>
             <p data-en="Set screening options such as frequency, channel angles and dot shape. HRP supports multiple dot forms and produces high-resolution separation output." data-es="Configura opciones de trama como frecuencia, ángulos por canal y forma del punto. HRP admite distintas formas de punto y genera separaciones de alta resolución.">Set screening options such as frequency, channel angles and dot shape. HRP supports multiple dot forms and produces high-resolution separation output.</p>
-            <div class="img-frame">
+            <div class="img-frame" data-slot="feat-halftone" data-size="1200×750">
                 <div class="img-frame-placeholder">
                     <div class="frame-icon">⬤</div>
-                    <div class="frame-label">Halftone Engine · Punto tramado</div>
-                    <div class="frame-hint">Captura de una separación tramada ampliada — punto elipse o round</div>
+                    <div class="frame-label" data-en="Halftone Engine · Halftone dot" data-es="Halftone Engine · Punto tramado">Halftone Engine · Halftone dot</div>
+                    <div class="frame-hint" data-en="Zoomed screenshot of a halftone separation — ellipse or round dot" data-es="Captura de una separación tramada ampliada — punto elipse o round">Zoomed screenshot of a halftone separation — ellipse or round dot</div>
                 </div>
             </div>
         </div>
@@ -1363,11 +1475,11 @@
             <div class="feature-badge" data-en="Aware" data-es="Consciente">Aware</div>
             <h3 data-en="Separation Analysis" data-es="Análisis de Separación">Separation Analysis</h3>
             <p data-en="Review useful production details such as ink coverage, channel order, knockout issues and duplicate channel names." data-es="Revisa información útil para producción, como cobertura de tinta, orden de canales, problemas de knockout y nombres duplicados.">Review useful production details such as ink coverage, channel order, knockout issues and duplicate channel names.</p>
-            <div class="img-frame">
+            <div class="img-frame" data-slot="feat-analysis" data-size="1200×750">
                 <div class="img-frame-placeholder">
                     <div class="frame-icon">📊</div>
-                    <div class="frame-label">Análisis de Separación · QA Panel</div>
-                    <div class="frame-hint">Captura del panel de análisis con findings y score</div>
+                    <div class="frame-label" data-en="Separation Analysis · QA Panel" data-es="Análisis de Separación · QA Panel">Separation Analysis · QA Panel</div>
+                    <div class="frame-hint" data-en="Screenshot of the analysis panel with findings and score" data-es="Captura del panel de análisis con findings y score">Screenshot of the analysis panel with findings and score</div>
                 </div>
             </div>
         </div>
@@ -1375,11 +1487,11 @@
             <div class="feature-badge" data-en="Offline" data-es="Offline">Offline</div>
             <h3 data-en="100% Local Processing" data-es="Procesamiento 100% Local">100% Local Processing</h3>
             <p data-en="No cloud. No uploads. No subscriptions. Your files never leave your machine." data-es="Sin nube. Sin subidas. Sin suscripciones. Tus archivos nunca salen de tu máquina.">No cloud. No uploads. No subscriptions. Your files never leave your machine.</p>
-            <div class="img-frame">
+            <div class="img-frame" data-slot="feat-offline" data-size="1200×750">
                 <div class="img-frame-placeholder">
                     <div class="frame-icon">🔒</div>
-                    <div class="frame-label">Procesamiento Local · Sin conexión</div>
-                    <div class="frame-hint">Captura del HRP corriendo offline — sin indicador de red</div>
+                    <div class="frame-label" data-en="Local Processing · Offline" data-es="Procesamiento Local · Sin conexión">Local Processing · Offline</div>
+                    <div class="frame-hint" data-en="Screenshot of HRP running offline — no network indicator" data-es="Captura del HRP corriendo offline — sin indicador de red">Screenshot of HRP running offline — no network indicator</div>
                 </div>
             </div>
         </div>
@@ -1394,7 +1506,7 @@
                     <div class="play-btn">
                         <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                     </div>
-                    <span class="video-caption" data-en="Watch full demo — approx. 3 min" data-es="Ver demo completo — aprox. 3 min">Watch full demo — approx. 3 min</span>
+                    <span class="video-caption" data-en="Demo video — coming soon" data-es="Video demo — próximamente">Demo video — coming soon</span>
                 </div>
                 <iframe id="videoIframe" style="display:none"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -1403,17 +1515,17 @@
             </div>
         </div>
         <div class="reveal reveal-d2">
-            <div class="eyebrow" data-en="Demo in Production" data-es="Demo en Producción">Demo in Production</div>
+            <div class="eyebrow" data-en="Product Demo" data-es="Demo del Producto">Product Demo</div>
             <h2 class="section-h2">
                 <span data-en="Watch it" data-es="Míralo">Watch it</span><br>
                 <span data-en="work in" data-es="funcionar en">work in</span><br>
                 <span class="em" data-en="your shop." data-es="tu taller.">your shop.</span>
             </h2>
-            <p class="section-desc" style="margin-bottom:28px;" data-en="Load a PS/EPS, watch automatic color separation, review the analysis and download plates ready for mesh." data-es="Carga un PS/EPS, observa la separación automática de colores, revisa el análisis y descarga las placas listas para malla.">Load a PS/EPS, watch automatic color separation, review the analysis and download plates ready for mesh.</p>
+            <p class="section-desc" style="margin-bottom:28px;" data-en="Load a PDF or PostScript file, watch automatic color separation, review the analysis and download plates ready for mesh." data-es="Carga un archivo PDF o PostScript, observa la separación automática de colores, revisa el análisis y descarga las placas listas para malla.">Load a PDF or PostScript file, watch automatic color separation, review the analysis and download plates ready for mesh.</p>
             <div style="display:flex;flex-direction:column;gap:12px;">
                 <div style="display:flex;align-items:center;gap:12px;font-size:0.78rem;color:var(--smoke);">
                     <span style="color:var(--safety);font-weight:700;">✓</span>
-                    <span data-en="CMYK + Spot separation in real time" data-es="Separación CMYK + Spot en tiempo real">CMYK + Spot separation in real time</span>
+                    <span data-en="CMYK + Spot separation" data-es="Separación CMYK + Spot">CMYK + Spot separation</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;font-size:0.78rem;color:var(--smoke);">
                     <span style="color:var(--safety);font-weight:700;">✓</span>
@@ -1461,7 +1573,7 @@
                 <div class="comp-item" data-en="Set channel angles and screening options" data-es="Configurar ángulos y opciones de trama">Set channel angles and screening options</div>
                 <div class="comp-item" data-en="Pre-production file checks" data-es="Revisión de archivos antes de producir">Pre-production file checks</div>
                 <div class="comp-item" data-en="Compare artwork and separations" data-es="Comparar diseño y separaciones">Compare artwork and separations</div>
-                <div class="comp-item" data-en="Reusable shop color library with ASE support" data-es="Biblioteca de colores reutilizable con soporte ASE">Reusable shop color library with ASE support</div>
+                <div class="comp-item" data-en="Reusable shop color library (ASE import)" data-es="Biblioteca de colores reutilizable (importa ASE)">Reusable shop color library (ASE import)</div>
                 <div class="comp-item" data-en="A connected workflow with job review information" data-es="Un flujo conectado con información para revisar cada trabajo">A connected workflow with job review information</div>
             </div>
         </div>
@@ -1502,17 +1614,17 @@
         <p class="section-desc" data-en="A focused interface for everyday shop work: load a job, review the separations and see the information you need without digging through complicated menus." data-es="Una interfaz enfocada en el trabajo diario del taller: carga un trabajo, revisa las separaciones y consulta la información que necesitas sin buscar entre menús complicados.">A focused interface for everyday shop work: load a job, review the separations and see the information you need without digging through complicated menus.</p>
     </div>
     <div class="gallery-grid">
-        <div class="gallery-item reveal reveal-d1">
+        <div class="gallery-item reveal reveal-d1" data-slot="gal-separation" data-size="1600×1000">
             <div class="gallery-placeholder">
                 <div class="gallery-placeholder-icon"></div>
                 <div class="gallery-placeholder-label" data-en="RIP Panel — Coming Soon" data-es="Panel RIP — Próximamente">RIP Panel — Coming Soon</div>
             </div>
             <div class="gallery-caption">
                 <strong data-en="Separation Panel" data-es="Panel de Separación">Separation Panel</strong>
-                <span data-en="Load your PDF, adjust frequencies and run full separation in seconds." data-es="Carga tu PDF, ajusta frecuencias y ejecuta la separación completa en segundos.">Load your PDF, adjust frequencies and run full separation in seconds.</span>
+                <span data-en="Load your PDF or PostScript file, adjust frequencies and run full separation in seconds." data-es="Carga tu archivo PDF o PostScript, ajusta frecuencias y ejecuta la separación completa en segundos.">Load your PDF or PostScript file, adjust frequencies and run full separation in seconds.</span>
             </div>
         </div>
-        <div class="gallery-item reveal reveal-d2">
+        <div class="gallery-item reveal reveal-d2" data-slot="gal-layers" data-size="1600×1000">
             <div class="gallery-placeholder">
                 <div class="gallery-placeholder-icon">🎨</div>
                 <div class="gallery-placeholder-label" data-en="Layer Preview — Coming Soon" data-es="Previsualizador — Próximamente">Layer Preview — Coming Soon</div>
@@ -1522,7 +1634,7 @@
                 <span data-en="Review each plate individually or in composite with real garment color." data-es="Revisa cada placa individualmente o en composite con el color de prenda real.">Review each plate individually or in composite with real garment color.</span>
             </div>
         </div>
-        <div class="gallery-item reveal reveal-d3">
+        <div class="gallery-item reveal reveal-d3" data-slot="gal-diff" data-size="1600×1000">
             <div class="gallery-placeholder">
                 <div class="gallery-placeholder-icon">🔍</div>
                 <div class="gallery-placeholder-label" data-en="Screenshot — Visual Analysis" data-es="Screenshot — Análisis Visual">Screenshot — Visual Analysis</div>
@@ -1532,17 +1644,17 @@
                 <span data-en="Visual map of errors between composite and original before printing." data-es="Mapa visual de errores entre composite y original antes de imprimir.">Visual map of errors between composite and original before printing.</span>
             </div>
         </div>
-        <div class="gallery-item reveal reveal-d1">
+        <div class="gallery-item reveal reveal-d1" data-slot="gal-libraries" data-size="1600×1000">
             <div class="gallery-placeholder">
                 <div class="gallery-placeholder-icon">📚</div>
-                <div class="gallery-placeholder-label" data-en="Screenshot — ASE Libraries" data-es="Screenshot — Bibliotecas ASE">Screenshot — ASE Libraries</div>
+                <div class="gallery-placeholder-label" data-en="Screenshot — Color Libraries" data-es="Screenshot — Bibliotecas de Color">Screenshot — Color Libraries</div>
             </div>
             <div class="gallery-caption">
                 <strong data-en="Color Libraries" data-es="Bibliotecas de Color">Color Libraries</strong>
-                <span data-en="Import ASE swatches and maintain consistent color naming across jobs." data-es="Importa muestras ASE y mantén nombres de color consistentes entre trabajos.">Import ASE swatches and maintain consistent color naming across jobs.</span>
+                <span data-en="Import Adobe ASE swatch libraries and keep color naming consistent across jobs." data-es="Importa bibliotecas de muestras Adobe ASE y mantén nombres de color consistentes entre trabajos.">Import Adobe ASE swatch libraries and keep color naming consistent across jobs.</span>
             </div>
         </div>
-        <div class="gallery-item reveal reveal-d2">
+        <div class="gallery-item reveal reveal-d2" data-slot="gal-report" data-size="1600×1000">
             <div class="gallery-placeholder">
                 <div class="gallery-placeholder-icon">📊</div>
                 <div class="gallery-placeholder-label" data-en="Production Report — Coming Soon" data-es="Reporte de Producción — Próximamente">Production Report — Coming Soon</div>
@@ -1552,7 +1664,7 @@
                 <span data-en="Clear, actionable preflight results in production language, not jargon." data-es="Resultados de preflight claros y accionables en lenguaje de producción, no jerga.">Clear, actionable preflight results in production language, not jargon.</span>
             </div>
         </div>
-        <div class="gallery-item reveal reveal-d3">
+        <div class="gallery-item reveal reveal-d3" data-slot="gal-compare" data-size="1600×1000">
             <div class="gallery-placeholder">
                 <div class="gallery-placeholder-icon">🎯</div>
                 <div class="gallery-placeholder-label" data-en="Artwork Comparison — Coming Soon" data-es="Comparación del Diseño — Próximamente">Artwork Comparison — Coming Soon</div>
@@ -1565,7 +1677,7 @@
     </div>
 </section>
 
-<section class="section roadmap-section">
+<section class="section roadmap-section" id="roadmap">
     <div class="reveal">
         <div class="eyebrow" data-en="A Product That Can Grow With Your Shop" data-es="Un Producto que Puede Crecer con Tu Taller">A Product That Can Grow With Your Shop</div>
         <h2 class="section-h2">
@@ -1579,8 +1691,9 @@
             <h4 data-en="Today's Release" data-es="Lanzamiento de Hoy">Today's Release</h4>
             <div class="roadmap-list">
                 <div class="roadmap-item" data-en="Separation Analysis Engine" data-es="Motor de Análisis de Separación">Separation Analysis Engine</div>
-                <div class="roadmap-item" data-en="Reusable shop color library with ASE support" data-es="Biblioteca de colores reutilizable con soporte ASE">Reusable shop color library with ASE support</div>
+                <div class="roadmap-item" data-en="Reusable shop color library (ASE import)" data-es="Biblioteca de colores reutilizable (importa ASE)">Reusable shop color library (ASE import)</div>
                 <div class="roadmap-item" data-en="Artwork Comparison Check" data-es="Revisión de Diseño y Separaciones">Artwork Comparison Check</div>
+                <div class="roadmap-item" data-en="Print preview (merged plates)" data-es="Vista previa de impresión (placas unidas)">Print preview (merged plates)</div>
                 <div class="roadmap-item" data-en="Professional Halftone Engine" data-es="Motor de Semitono Profesional">Professional Halftone Engine</div>
                 <div class="roadmap-item" data-en="Job Review Summary" data-es="Resumen de Revisión del Trabajo">Job Review Summary</div>
                 <div class="roadmap-item" data-en="Automatic plate role detection" data-es="Detección automática de rol de placa">Automatic plate role detection</div>
@@ -1589,6 +1702,7 @@
         <div class="roadmap-col tomorrow">
             <h4 data-en="Coming Next" data-es="Próximamente">Coming Next</h4>
             <div class="roadmap-list">
+                <div class="roadmap-item" data-en="Ink spread simulation in the preview" data-es="Simulación de estallado de tinta en la vista previa">Ink spread simulation in the preview</div>
                 <div class="roadmap-item" data-en="Native Windows installer (.exe)" data-es="Instalador nativo de Windows (.exe)">Native Windows installer (.exe)</div>
                 <div class="roadmap-item" data-en="License &amp; trial period system" data-es="Sistema de licencias y periodo de prueba">License &amp; trial period system</div>
                 <div class="roadmap-item" data-en="Dot gain calibration profiles" data-es="Perfiles de calibración de ganancia de punto">Dot gain calibration profiles</div>
@@ -1614,11 +1728,11 @@
                 <div class="spec-cell-title" data-en="Input Formats" data-es="Formatos de Entrada">Input Formats</div>
             </div>
             <div class="spec-data">
-                <strong>PDF</strong> standard and pre-separated<br>
-                <strong>PostScript</strong> with named spot channels<br>
+                
+                <strong>PDF (PDF/X-4)</strong> and <strong>PostScript (.ps)</strong> with named spot channels<br>
+            <span data-en="EPS: export from Illustrator as PDF/X-4 or PS first" data-es="EPS: exporta desde Illustrator como PDF/X-4 o PS primero">EPS: export from Illustrator as PDF/X-4 or PS first</span><br>
                 <strong>CMYK + Spot Colors</strong> in a single file<br>
-                Input resolution: up to <strong>2400 DPI</strong><br>
-                <span data-en="No file size limit" data-es="Sin límite de tamaño de archivo">No file size limit</span>
+                Input resolution: up to <strong>2400 DPI</strong>
             </div>
         </div>
         <div class="spec-cell reveal reveal-d2">
@@ -1640,9 +1754,9 @@
                 <div class="spec-cell-title" data-en="Channels & Colors" data-es="Canales y Colores">Channels & Colors</div>
             </div>
             <div class="spec-data">
-                Up to <strong>7 simultaneous channels</strong> per job<br>
+                Tested with up to <strong>12 channels</strong> per job<br>
                 Name resolution in <strong>English, Spanish, Portuguese</strong><br>
-                Importable/exportable <strong>color library</strong> (ASE)<br>
+                Import <strong>color libraries</strong> (ASE) and custom palettes<br>
                 Underbase detection and <strong>highlight channels</strong><br>
                 <strong>Undefined color</strong> management with configurable policy
             </div>
@@ -1663,6 +1777,32 @@
     </div>
 </section>
 
+<section class="section why-section" id="audience">
+    <div class="reveal" style="text-align:center;">
+        <div class="eyebrow center" data-en="Who It's For" data-es="Para Quién Es">Who It's For</div>
+        <h2 class="section-h2" style="margin:0 auto 24px;text-align:center;" data-en="One tool for the office and the press floor." data-es="Una herramienta para la oficina y para la planta.">One tool for the office and the press floor.</h2>
+    </div>
+    <div class="audience-grid reveal reveal-d2">
+        <div class="audience-card">
+            <h4 data-en="Shop owners" data-es="Dueños de taller">Shop owners</h4>
+            <ul>
+                <li data-en="Fewer reprints caused by preventable file errors" data-es="Menos reimpresiones por errores de archivo evitables">Fewer reprints caused by preventable file errors</li>
+                <li data-en="Same color names and settings across operators and shifts" data-es="Mismos nombres de color y ajustes entre operadores y turnos">Same color names and settings across operators and shifts</li>
+                <li data-en="Production sheet for the press floor" data-es="Hoja de producción para la planta">Production sheet for the press floor</li>
+                <li data-en="Runs on your own Windows PC — no cloud" data-es="Corre en tu propia PC con Windows — sin nube">Runs on your own Windows PC — no cloud</li>
+            </ul>
+        </div>
+        <div class="audience-card">
+            <h4 data-en="Designers &amp; prepress" data-es="Diseñadores y preprensa">Designers &amp; prepress</h4>
+            <ul>
+                <li data-en="Compare your separations against the original artwork before they leave your desk" data-es="Compara tus separaciones con el arte original antes de que salgan de tu escritorio">Compare your separations against the original artwork before they leave your desk</li>
+                <li data-en="Set LPI, angles and dot shape per channel" data-es="Define LPI, ángulos y forma de punto por canal">Set LPI, angles and dot shape per channel</li>
+                <li data-en="Your color names recognized in English, Spanish and Portuguese" data-es="Tus nombres de color reconocidos en inglés, español y portugués">Your color names recognized in English, Spanish and Portuguese</li>
+                <li data-en="Load any color library or build your own palette" data-es="Carga cualquier biblioteca de color o crea tu propia paleta">Load any color library or build your own palette</li>
+            </ul>
+        </div>
+    </div>
+</section>
 <section class="section why-section">
     <div class="reveal">
         <div class="eyebrow center" data-en="Why Screen-Printing Shops Consider HRP" data-es="Por Qué los Talleres de Serigrafía Consideran HRP">Why Screen-Printing Shops Consider HRP</div>
@@ -1703,6 +1843,26 @@
     </div>
 </section>
 
+<section class="section why-section" id="pricing">
+    <div class="reveal" style="text-align:center;">
+        <div class="eyebrow center" data-en="Pricing" data-es="Precio">Pricing</div>
+        <h2 class="section-h2" style="margin:0 auto 24px;text-align:center;" data-en="Two programs. One simple price." data-es="Dos programas. Un precio simple.">Two programs. One simple price.</h2>
+        <p class="section-desc" style="margin:0 auto;text-align:center;" data-en="One avoided reprint pays for HRP many times over." data-es="Una sola reimpresión evitada paga HRP muchas veces.">One avoided reprint pays for HRP many times over.</p>
+    </div>
+    <div class="audience-card reveal reveal-d2" style="max-width:520px;margin:40px auto 0;text-align:center;">
+        <div style="font-family:var(--font-display);font-size:4.5rem;font-weight:900;line-height:1;color:var(--ember);">$30</div>
+        <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--smoke);margin:8px 0 24px;" data-en="One-time payment · yours for life" data-es="Pago único · tuyo de por vida">One-time payment · yours for life</div>
+        <ul style="text-align:left;">
+            <li data-en="Halftone RIP Pro: separations, merged print preview, reference comparison and color library" data-es="Halftone RIP Pro: separaciones, vista previa unida, comparación con referencia y biblioteca de colores">Halftone RIP Pro: separations, merged print preview, reference comparison and color library</li>
+            <li data-en="Halftone RIP Fast included: quick PS/EPS to PDF conversion" data-es="Halftone RIP Fast incluido: conversión rápida de PS/EPS a PDF">Halftone RIP Fast included: quick PS/EPS to PDF conversion</li>
+            <li data-en="Halftone RIP Fast stays with you for life, even if you only use the demo of HRP" data-es="Halftone RIP Fast se queda contigo de por vida, incluso si solo usas el demo de HRP">Halftone RIP Fast stays with you for life, even if you only use the demo of HRP</li>
+            <li data-en="Includes all updates to this version. A future improved version will be offered separately." data-es="Incluye todas las actualizaciones de esta versión. Una futura versión mejorada se ofrecerá por separado.">Includes all updates to this version. A future improved version will be offered separately.</li>
+            <li data-en="No subscriptions, no monthly fees" data-es="Sin suscripciones ni mensualidades">No subscriptions, no monthly fees</li>
+            <li data-en="Runs locally on your Windows PC" data-es="Funciona localmente en tu PC con Windows">Runs locally on your Windows PC</li>
+        </ul>
+        <p class="section-desc" style="margin:24px auto 0;font-size:0.7rem;" data-en="Beta access is by request. Final licensing arrives with the Windows installer." data-es="El acceso beta es por solicitud. La licencia definitiva llegará con el instalador de Windows.">Beta access is by request. Final licensing arrives with the Windows installer.</p>
+    </div>
+</section>
 <section class="cta-section" id="access">
     <div class="reveal">
         <div class="eyebrow center" data-en="For Small and Growing Shops" data-es="Para Talleres Pequeños y en Crecimiento">For Small and Growing Shops</div>
@@ -1711,7 +1871,7 @@
             <em class="em" data-en="prepress workflow?" data-es="preprensa más práctico?">prepress workflow?</em>
         </h2>
         <p class="cta-desc" data-en="Try the HRP beta and see how it fits your shop's workflow. HRP is designed for Windows and processes your production files locally on your computer." data-es="Prueba la beta de HRP y descubre cómo encaja en el flujo de tu taller. HRP está diseñado para Windows y procesa tus archivos de producción localmente en tu computadora.">Try the HRP beta and see how it fits your shop's workflow. HRP is designed for Windows and processes your production files locally on your computer.</p>
-        <a href="mailto:info@halftoneripro.com?subject=Beta Access Request" class="btn-primary" style="font-size:0.75rem;padding:20px 48px;" data-en="✉ REQUEST BETA ACCESS" data-es="✉ SOLICITAR ACCESO BETA">✉ REQUEST BETA ACCESS</a>
+        <a href="mailto:info@halftoneripro.com?subject=Beta%20Access%20Request&body=Shop%20name%3A%0AYour%20role%20(owner%20%2F%20designer%20%2F%20operator)%3A%0AMain%20print%20type%20(water-based%20%2F%20plastisol)%3A" class="btn-primary" style="font-size:0.75rem;padding:20px 48px;" data-en="✉ REQUEST BETA ACCESS" data-es="✉ SOLICITAR ACCESO BETA">✉ REQUEST BETA ACCESS</a>
         <div class="cta-meta">
             <span data-en="Beta access" data-es="Acceso beta">Beta access</span>
             <span>·</span>
@@ -1719,7 +1879,7 @@
             <span>·</span>
             <span data-en="100% Offline" data-es="100% Offline">100% Offline</span>
             <span>·</span>
-            <span data-en="Beta Stable v0.4.17" data-es="Beta Estable v0.4.17">Beta Stable v0.4.17</span>
+            <span data-en="Beta v0.4.17" data-es="Beta v0.4.17">Beta v0.4.17</span>
         </div>
     </div>
 </section>
@@ -1736,18 +1896,11 @@
                 <a href="#features" data-en="Shop Tools" data-es="Herramientas">Shop Tools</a>
                 <a href="#specs" data-en="Specifications" data-es="Requisitos">Specifications</a>
                 <a href="#roadmap" data-en="Roadmap" data-es="Roadmap">Roadmap</a>
-                <a href="#" data-en="Release Notes" data-es="Notas de Versión">Release Notes</a>
             </div>
-            <div class="footer-nav-col">
-                <h5 data-en="Resources" data-es="Recursos">Resources</h5>
-                <a href="#" data-en="Documentation" data-es="Documentación">Documentation</a>
-                <a href="#" data-en="Knowledge Base" data-es="Base de Conocimiento">Knowledge Base</a>
-                <a href="#" data-en="Video Tutorials" data-es="Video Tutoriales">Video Tutorials</a>
-            </div>
+            
             <div class="footer-nav-col">
                 <h5 data-en="Company" data-es="Empresa">Company</h5>
-                <a href="#" data-en="About" data-es="Acerca de">About</a>
-                <a href="#" data-en="Contact" data-es="Contacto">Contact</a>
+                <a href="mailto:info@halftoneripro.com" data-en="Contact" data-es="Contacto">Contact</a>
                 <a href="#access" data-en="Get Beta Access" data-es="Acceder a la Beta">Get Beta Access</a>
             </div>
         </div>
@@ -1764,7 +1917,10 @@ const canvas = document.getElementById('heroCanvas');
 const ctx = canvas.getContext('2d');
 let W, H, dots = [], mouse = {x:-9999,y:-9999}, t = 0;
 
+let lastW = 0;
 function resize() {
+    if (window.innerWidth === lastW && dots.length) return; // ignore mobile address-bar resizes
+    lastW = window.innerWidth;
     W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
     initDots();
@@ -1786,6 +1942,7 @@ function initDots() {
 }
 
 function draw() {
+    if (document.hidden || window.scrollY > H * 1.1) { requestAnimationFrame(draw); return; } // pause when hero is off-screen
     ctx.fillStyle = '#0a0a0a';
     ctx.fillRect(0, 0, W, H);
     t += 0.012;
@@ -1848,7 +2005,7 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 // ── SMOOTH SCROLL ──
-document.querySelectorAll('a[href^="#"]').forEach(a => {
+document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(a => {
     a.addEventListener('click', e => {
         e.preventDefault();
         const t = document.querySelector(a.getAttribute('href'));
@@ -1861,7 +2018,7 @@ const langToggle = document.querySelector('.lang-toggle');
 const langSpans = langToggle.querySelectorAll('span');
 let currentLang = 'en';
 
-function setLanguage(lang) {
+var setLanguage = function (lang) {
     currentLang = lang;
     langSpans.forEach(s => s.classList.toggle('active', s.dataset.lang === lang));
     document.querySelectorAll('[data-en][data-es]').forEach(el => {
@@ -1873,27 +2030,78 @@ function setLanguage(lang) {
         }
     });
     document.documentElement.lang = lang;
-}
+};
 
+const SEO = {
+    en: { title: 'Halftone RIP Pro — Prepress made practical for screen-printing shops',
+          desc: 'HRP: practical prepress for textile screen-printing shops. Review separations, organize shop colors and set halftone options. Runs locally on Windows.' },
+    es: { title: 'Halftone RIP Pro — Preprensa práctica para talleres de serigrafía',
+          desc: 'HRP: preprensa práctica para talleres de serigrafía textil. Revisa separaciones, organiza los colores del taller y ajusta la trama. Funciona de forma local en Windows.' }
+};
+const _setLanguage = setLanguage;
+setLanguage = function (lang) {
+    _setLanguage(lang);
+    document.title = SEO[lang].title;
+    const md = document.querySelector('meta[name="description"]');
+    if (md) md.setAttribute('content', SEO[lang].desc);
+    try { localStorage.setItem('hrp-lang', lang); } catch (e) {}
+};
 langSpans.forEach(s => {
     s.addEventListener('click', () => setLanguage(s.dataset.lang));
+    s.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLanguage(s.dataset.lang); } });
 });
+(function initLang() {
+    let l = null;
+    try { l = localStorage.getItem('hrp-lang'); } catch (e) {}
+    if (!l) l = (navigator.language || 'en').toLowerCase().startsWith('es') ? 'es' : 'en';
+    if (l !== 'en') setLanguage(l);
+})();
 
 // ── VIDEO EMBED ──
 const VIDEO_URL = '';
 function loadVideo() {
-    if (!VIDEO_URL) {
-        alert(currentLang === 'en' 
-            ? 'Coming soon: replace VIDEO_URL in the script with your YouTube/Vimeo embed URL.' 
-            : 'Próximamente: reemplaza VIDEO_URL en el script con tu URL de embed de YouTube/Vimeo.');
-        return;
-    }
+    if (!VIDEO_URL) return; // no video yet: do nothing (set VIDEO_URL to enable)
     const iframe = document.getElementById('videoIframe');
     const placeholder = document.getElementById('videoPlaceholder');
     iframe.src = VIDEO_URL;
     iframe.style.display = 'block';
     placeholder.style.display = 'none';
 }
+
+// ── IMAGES: pega aquí la ruta (o URL) de cada captura. Vacío = se ve el marco. ──
+const IMAGES = {
+    'hero-main':        '',  // 1920×1080  Ventana principal de HRP
+    'preview-result':   '',  // 1200×900   Resultado simulado (caso recreado con arte propio/libre)
+    'preview-reference':'',  // 1200×900   Imagen de referencia
+    'preview-diff':     '',  // 1200×900   Mapa de diferencias (idealmente con un color sin noquear)
+    'feat-plates':      '',  // 1200×750   Panel de separaciones / orden de placas
+    'feat-colors':      '',  // 1200×750   Biblioteca de colores / chips resueltos
+    'feat-check':       '',  // 1200×750   Comparación con score y diferencias
+    'feat-halftone':    '',  // 1200×750   Separación tramada ampliada
+    'feat-analysis':    '',  // 1200×750   Panel de análisis con hallazgos
+    'feat-offline':     '',  // 1200×750   HRP corriendo sin conexión
+    'gal-separation':   '',  // 1600×1000  Panel de separación
+    'gal-layers':       '',  // 1600×1000  Previsualizador de capas
+    'gal-diff':         '',  // 1600×1000  Análisis de diferencias
+    'gal-libraries':    '',  // 1600×1000  Bibliotecas de color
+    'gal-report':       '',  // 1600×1000  Reporte de producción
+    'gal-compare':      '',  // 1600×1000  Vista de comparación
+};
+document.querySelectorAll('[data-slot]').forEach(el => {
+    const slot = el.dataset.slot, src = IMAGES[slot];
+    if (!src) {
+        const ph = el.querySelector('.img-frame-placeholder, .gallery-placeholder');
+        if (ph) { const t = document.createElement('div'); t.className = 'slot-tag'; t.textContent = 'slot: ' + slot + ' · ' + (el.dataset.size || ''); ph.appendChild(t); }
+        return;
+    }
+    const img = new Image();
+    img.alt = el.dataset.alt || slot;
+    img.loading = 'lazy';
+    img.onload = () => el.classList.add('has-image');
+    img.onerror = () => img.remove();
+    img.src = src;
+    el.prepend(img);
+});
 </script>
 
 </body>
