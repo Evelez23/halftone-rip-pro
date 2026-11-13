@@ -1075,6 +1075,7 @@
 
     .preview-shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1100px; margin: 48px auto 0; }
     @media (max-width: 900px) { .preview-shots { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) { .fast-included-card { grid-template-columns: 1fr !important; gap: 12px !important; } }
     .has-image > .img-frame-placeholder, .has-image > .gallery-placeholder { display: none; }
     .img-frame.has-image { border-style: solid; }
     .slot-tag { font-family: var(--font-mono); font-size: 0.6rem; color: var(--deep-smoke); letter-spacing: 0.08em; text-align: center; }
@@ -1905,7 +1906,7 @@
         </ul>
         <p class="section-desc" style="margin:24px auto 0;font-size:0.7rem;" data-en="The trial and paid activation use the same current version. Payment unlocks it; it does not provide a different program." data-es="La prueba y la activación pagada utilizan la misma versión actual. El pago la desbloquea; no te entrega un programa diferente.">The trial and paid activation use the same current version. Payment unlocks it; it does not provide a different program.</p>
     </div>
-    <div class="audience-card reveal reveal-d3" style="max-width:760px;margin:28px auto 0;text-align:left;display:grid;grid-template-columns:1fr 2fr;gap:24px;align-items:center;">
+    <div class="audience-card reveal reveal-d3 fast-included-card" style="max-width:760px;margin:28px auto 0;text-align:left;display:grid;grid-template-columns:1fr 2fr;gap:24px;align-items:center;">
         <div>
             <div class="eyebrow" data-en="Included at no extra cost" data-es="Incluido sin costo adicional">Included at no extra cost</div>
             <h3 style="font-family:var(--font-display);font-size:2rem;line-height:1.05;margin:10px 0;color:var(--paper);">Halftone RIP Fast</h3>
