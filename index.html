@@ -2108,12 +2108,7 @@ langSpans.forEach(s => {
     s.addEventListener('click', () => setLanguage(s.dataset.lang));
     s.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLanguage(s.dataset.lang); } });
 });
-(function initLang() {
-    let l = null;
-    try { l = localStorage.getItem('hrp-lang'); } catch (e) {}
-    if (!l) l = (navigator.language || 'en').toLowerCase().startsWith('es') ? 'es' : 'en';
-    if (l !== 'en') setLanguage(l);
-})();
+/* initLang se ejecuta después de declarar IMAGES y applyLanguageImages. */
 
 // ── VIDEO EMBED ──
 const VIDEO_URL = '';
@@ -2253,6 +2248,14 @@ lightboxImage.addEventListener('pointerup',()=>{dragging=false;lightboxImage.cla
 lightboxImage.addEventListener('pointercancel',()=>{dragging=false;lightboxImage.classList.remove('is-dragging');});
 
 window.applyLanguageImages = applyLanguageImages;
+
+(function initLang() {
+    let l = null;
+    try { l = localStorage.getItem('hrp-lang'); } catch (e) {}
+    if (!l) l = (navigator.language || 'en').toLowerCase().startsWith('es') ? 'es' : 'en';
+    if (l !== 'en') setLanguage(l);
+})();
+
 applyLanguageImages();
 </script>
 
