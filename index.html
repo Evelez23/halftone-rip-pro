@@ -2167,7 +2167,81 @@ const IMAGES = {
 };
 function applyLanguageImages() {
     const images = IMAGES[currentLang] || IMAGES.en;
-    window.applyLanguageImages = applyLanguageImages;
+    document.querySelectorAll('[data-slot]').forEach(el => {
+        const slot = el.dataset.slot;
+        const src = images[slot] || '';
+        let img = el.querySelector(':scope > img[data-slot-image]');
+        if (!src) {
+            if (img) img.remove();
+            el.classList.remove('has-image');
+            return;
+        }
+        if (!img) {
+            img = new Image();
+            img.dataset.slotImage = 'true';
+            img.alt = el.dataset.alt || slot;
+            img.loading = 'lazy';
+            el.prepend(img);
+        }
+        if (img.getAttribute('src') !== src) {
+            el.classList.remove('has-image');
+            img.onload = () => el.classList.add('has-image');
+            img.onerror = () => { img.remove(); el.classList.remove('has-image'); };
+            img.src = src;
+        }
+        el.classList.add('image-zoomable');
+        el.setAttribute('tabindex','0');
+        el.setAttribute('role','button');
+        el.setAttribute('aria-label','Open larger image: ' + img.alt);
+        el.onclick = () => openLightbox(img.currentSrc || img.src, img.alt);
+        el.onkeydown = e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox(img.currentSrc || img.src, img.alt);
+            }
+        };
+    });
+}
+
+const lightbox = document.createElement('div');
+lightbox.className = 'image-lightbox';
+lightbox.setAttribute('role','dialog');
+lightbox.setAttribute('aria-modal','true');
+lightbox.setAttribute('aria-label','Image viewer');
+lightbox.innerHTML = `
+    <div class="lightbox-toolbar">
+        <button class="lightbox-btn" type="button" data-zoom="out" aria-label="Zoom out">−</button>
+        <button class="lightbox-btn" type="button" data-zoom="reset" aria-label="Reset zoom">↺</button>
+        <button class="lightbox-btn" type="button" data-zoom="in" aria-label="Zoom in">+</button>
+        <button class="lightbox-btn lightbox-close" type="button" aria-label="Close image">×</button>
+    </div>
+    <div class="lightbox-stage"><img class="lightbox-image" alt=""></div>
+    <div class="lightbox-hint">Scroll or use + / − to zoom · Drag to explore · Esc to close</div>
+`;
+document.body.appendChild(lightbox);
+const lightboxImage = lightbox.querySelector('.lightbox-image');
+const lightboxStage = lightbox.querySelector('.lightbox-stage');
+let zoom = 1, panX = 0, panY = 0, dragging = false, pointerX = 0, pointerY = 0;
+function paintZoom() { lightboxImage.style.transform = `translate(${panX}px,${panY}px) scale(${zoom})`; }
+function resetZoom() { zoom=1; panX=0; panY=0; paintZoom(); }
+function closeLightbox() { lightbox.classList.remove('is-open'); document.body.style.overflow=''; resetZoom(); }
+function openLightbox(src, alt) {
+    lightboxImage.src=src; lightboxImage.alt=alt||'HRP screenshot';
+    resetZoom(); lightbox.classList.add('is-open'); document.body.style.overflow='hidden';
+}
+lightbox.querySelector('[data-zoom="in"]').addEventListener('click',()=>{zoom=Math.min(zoom+0.35,4);paintZoom();});
+lightbox.querySelector('[data-zoom="out"]').addEventListener('click',()=>{zoom=Math.max(zoom-0.35,1);if(zoom===1){panX=0;panY=0;}paintZoom();});
+lightbox.querySelector('[data-zoom="reset"]').addEventListener('click',resetZoom);
+lightbox.querySelector('.lightbox-close').addEventListener('click',closeLightbox);
+lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();});
+document.addEventListener('keydown',e=>{if(!lightbox.classList.contains('is-open'))return;if(e.key==='Escape')closeLightbox();if(e.key==='+'||e.key==='='){zoom=Math.min(zoom+0.35,4);paintZoom();}if(e.key==='-'){zoom=Math.max(zoom-0.35,1);paintZoom();}});
+lightboxStage.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(1,Math.min(4,zoom+(e.deltaY<0?0.2:-0.2)));if(zoom===1){panX=0;panY=0;}paintZoom();},{passive:false});
+lightboxImage.addEventListener('pointerdown',e=>{if(zoom===1)return;dragging=true;pointerX=e.clientX-panX;pointerY=e.clientY-panY;lightboxImage.classList.add('is-dragging');lightboxImage.setPointerCapture(e.pointerId);});
+lightboxImage.addEventListener('pointermove',e=>{if(!dragging)return;panX=e.clientX-pointerX;panY=e.clientY-pointerY;paintZoom();});
+lightboxImage.addEventListener('pointerup',()=>{dragging=false;lightboxImage.classList.remove('is-dragging');});
+lightboxImage.addEventListener('pointercancel',()=>{dragging=false;lightboxImage.classList.remove('is-dragging');});
+
+window.applyLanguageImages = applyLanguageImages;
 applyLanguageImages();
 </script>
 
